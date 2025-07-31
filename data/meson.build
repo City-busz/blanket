@@ -76,3 +76,14 @@ install_data(
   '@0@-symbolic.svg'.format(base_id),
   install_dir: join_paths(get_option('datadir'), 'icons/hicolor/symbolic/apps'),
 )
+
+service_conf = configuration_data()
+service_conf.set('appid', application_id)
+service_conf.set('bindir', join_paths(get_option('prefix'), get_option('bindir')))
+configure_file(
+  input: '@0@.service.in'.format(base_id),
+  output: '@0@.service'.format(application_id),
+  configuration: service_conf,
+  install: true,
+  install_dir: join_paths(get_option('datadir'), 'dbus-1', 'services')
+)
